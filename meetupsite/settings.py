@@ -28,10 +28,10 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["meetupsite.onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "meetupsite.onrender.com"]
 
 
-# Application definition
+# Application definitionmeetupsite.onrender.com"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -79,16 +79,11 @@ WSGI_APPLICATION = "meetupsite.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "meetupdatabase_a5of",
-        "USER": "admin_riya",
-        "PASSWORD": "cnCvWKFDpwAH3T3jAKHMMto0ihRTRAcb",
-        "HOST": "dpg-cvvl0omuk2gs73ddo650-a",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL"),
+        conn_max_age=600,
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
