@@ -80,8 +80,12 @@ WSGI_APPLICATION = "meetupsite.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",  # SQLite database file
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "meetupdatabase_a5of",
+        "USER": "admin_riya",
+        "PASSWORD": "cnCvWKFDpwAH3T3jAKHMMto0ihRTRAcb",
+        "HOST": "dpg-cvvl0omuk2gs73ddo650-a",
+        "PORT": "5432",
     }
 }
 
