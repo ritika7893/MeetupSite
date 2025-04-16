@@ -16,9 +16,8 @@ def index(request):
 def meetup_details(request, meetup_slug):
     try:
         selected_meetup = Meetup.objects.get(slug=meetup_slug)
-        if request.method == "GET":
-            registrationform = RegistrationForm()
-        else:
+
+        if request.method == "POST":
             registrationform = RegistrationForm(request.POST)
             if registrationform.is_valid():
                 user_email = registrationform.cleaned_data["email"]
@@ -29,8 +28,14 @@ def meetup_details(request, meetup_slug):
                         "phone": registrationform.cleaned_data["phone"],
                     },
                 )
-                selected_meetup.Participants.add(participant)
+                selected_meetup.participants.add(participant)
                 return redirect("confirm-registration", meetup_slug=meetup_slug)
+            else:
+                # 🔍 DEBUG: print form errors in console
+                print("Form errors:", registrationform.errors)
+
+        else:
+            registrationform = RegistrationForm()
 
         return render(
             request,
@@ -43,11 +48,15 @@ def meetup_details(request, meetup_slug):
                 "forms": registrationform,
             },
         )
+
     except Meetup.DoesNotExist:
         return render(
             request,
             "meetups/meetup-detail.html",
-            {"meetup_found": False, "forms": registrationform},
+            {
+                "meetup_found": False,
+                "forms": RegistrationForm(),
+            },
         )
 
 

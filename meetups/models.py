@@ -9,10 +9,13 @@ class Location(models.Model):
         return f"{self.name} ({self.address})"
 
 
+# models.py
 class Participant(models.Model):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=200, blank=True, null=True)
-    phone = models.IntegerField(max_length=10, blank=True, null=True)
+    phone = models.CharField(
+        max_length=20, blank=True, null=True
+    )  # Changed to CharField
 
     def __str__(self):
         return f"{self.name} ({self.email})"
@@ -28,7 +31,7 @@ class Meetup(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="images")
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    Participants = models.ManyToManyField(Participant, blank=True, null=True)
+    participants = models.ManyToManyField(Participant, blank=True)
 
     def __str__(self):
         return f"{self.title} - {self.slug}"

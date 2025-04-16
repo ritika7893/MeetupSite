@@ -74,25 +74,31 @@
             
                     <form method="POST" action="{% url 'meetup-detail' meetup.slug %}" class="request__form-three">
                         {% csrf_token %}
+                        {% if forms.errors %}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {% for field in forms %}
+                                        {% for error in field.errors %}
+                                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
                         <div class="form-grp">
-                          
                             {{ forms.name }}
-                            {{ forms.name.placeholder }}
                         </div>
                         <div class="form-grp">
-                           
                             {{ forms.email }}
-                            {{ forms.email.placeholder }}
                         </div>
                         <div class="form-grp">
-                           
                             {{ forms.phone }}
-                            {{ forms.phone.placeholder }}
                         </div>
                         <div class="form-grp">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
             
